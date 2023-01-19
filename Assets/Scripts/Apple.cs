@@ -19,12 +19,11 @@ public class Apple : MonoBehaviour
     public Sprite rottenSprite;
 
     private float timer = 0.0f;
-
     private bool canGrow = true;
-
     private Vector3 growVector;
     private Vector3 positionOffset;
     private Rigidbody2D body;
+    private HingeJoint2D joint;
     private SpriteRenderer spriteRenderer;
     private AppleState appleState;
 
@@ -36,6 +35,8 @@ public class Apple : MonoBehaviour
         // cache objs
         body = gameObject.transform.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        joint = gameObject.GetComponent<HingeJoint2D>();
+
         GameObject gc =  GameObject.FindWithTag("GameController");
         gameController = gc.GetComponent<GameController>();
 
@@ -44,7 +45,6 @@ public class Apple : MonoBehaviour
 
         // start small and gravity-free
         appleState = AppleState.Unripe;
-        body.gravityScale = 0f;
         gameObject.transform.localScale = new Vector3(0.01f, .01f, .01f);
     }
 
@@ -54,7 +54,6 @@ public class Apple : MonoBehaviour
         switch (appleState)
         {
             case AppleState.Unripe:
-                body.gravityScale = 0f;
                 spriteRenderer.sprite = unripeSprite;
                 if (gameObject.transform.localScale.x < maxScale && canGrow) {
                     gameObject.transform.localScale += growVector * Time.deltaTime;
@@ -77,17 +76,19 @@ public class Apple : MonoBehaviour
                 break;
 
             case AppleState.Rotten:
-                body.gravityScale = 1f;
+                if (joint) {
+                    Object.Destroy(joint);
+                }
                 break;
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (appleState == AppleState.Unripe && col.gameObject.tag == "Apple") {
-            canGrow = false;
-        }
-    }
+    // void OnCollisionEnter2D(Collision2D col)
+    // {
+    //     if (appleState == AppleState.Unripe && col.gameObject.tag == "Apple") {
+    //         canGrow = false;
+    //     }
+    // }
 
     void OnMouseDown() {
         if (appleState == AppleState.Ripe) {
