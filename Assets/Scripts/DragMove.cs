@@ -54,9 +54,9 @@ public class DragMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        float rotationAngle = 8;
+        float rotationAngle = 0f;
         if (moveDir == Vector3.left) {
-            rotationAngle = 173;
+            rotationAngle = 180f;
         }
         Quaternion rot = Quaternion.Euler(new Vector3(0, rotationAngle, 0));
         for (int i = 0; i < caughtRigidbodies.Count; i++)
