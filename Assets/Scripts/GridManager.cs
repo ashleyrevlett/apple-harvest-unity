@@ -28,7 +28,7 @@ public class GridManager : MonoBehaviour
         float h = s.bounds.size.y + gap;
         columns = (int)Mathf.Ceil(camWidth / w);
         rows = (int)Mathf.Ceil((Camera.main.orthographicSize * 2) / h);
-        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, 0));
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 12f, 0));
 
         float yTile = (1f / rows) / screenAspect;
         float xTile = yTile / screenAspect;
