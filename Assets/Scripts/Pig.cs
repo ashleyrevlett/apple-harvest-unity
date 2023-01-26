@@ -2,29 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// public enum Direction {
-//     Left,
-//     Right
-// }
-
 public class Pig : MonoBehaviour
 {
 
+    public float moveSpeed = 3.0f;
+    public int score = 0;
+
     private Vector3 moveDir = Vector3.right;
-
     private Transform trans;
-
     private float minX;
     private float maxX;
-
     private Vector2 screenBounds;
     private float objWidth;
-
-    public float moveSpeed = 3.0f;
+    private AudioSource sound;
 
     void Start()
     {
 
+        sound = gameObject.GetComponent<AudioSource>();
         trans = gameObject.GetComponent<Transform>();
 
         Vector2 bounds = gameObject.GetComponent<SpriteRenderer>().size;
@@ -53,7 +48,9 @@ public class Pig : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Apple") {
+            sound.Play();
             Object.Destroy(col.gameObject);
+            score += 1;
         }
     }
 }

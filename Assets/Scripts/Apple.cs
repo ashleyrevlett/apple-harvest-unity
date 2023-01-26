@@ -8,16 +8,15 @@ public class Apple : MonoBehaviour
         Ripe,
         Rotten
     }
-
     public float growSpeed;
-    private float maxScale = 1.0f;
-
+    public AppleState appleState;
     public float timeToRot = 3.0f;
-
     public Sprite unripeSprite;
     public Sprite ripeSprite;
     public Sprite rottenSprite;
 
+    private AudioSource fallSound;
+    private float maxScale = 1.0f;
     private float timer = 0.0f;
     private bool canGrow = true;
     private Vector3 growVector;
@@ -25,10 +24,7 @@ public class Apple : MonoBehaviour
     private Rigidbody2D body;
     private HingeJoint2D joint;
     private SpriteRenderer spriteRenderer;
-    private AppleState appleState;
-
     private GameController gameController;
-
 
     void Start()
     {
@@ -36,6 +32,7 @@ public class Apple : MonoBehaviour
         body = gameObject.transform.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         joint = gameObject.GetComponent<HingeJoint2D>();
+        fallSound = gameObject.GetComponent<AudioSource>();
 
         GameObject gc =  GameObject.FindWithTag("GameController");
         gameController = gc.GetComponent<GameController>();
@@ -78,21 +75,17 @@ public class Apple : MonoBehaviour
             case AppleState.Rotten:
                 if (joint) {
                     Object.Destroy(joint);
+                    fallSound.Play();
                 }
                 break;
         }
     }
 
-    // void OnCollisionEnter2D(Collision2D col)
-    // {
-    //     if (appleState == AppleState.Unripe && col.gameObject.tag == "Apple") {
-    //         canGrow = false;
-    //     }
-    // }
 
-    void OnMouseDown() {
-        if (appleState == AppleState.Ripe) {
-            Object.Destroy(gameObject);
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Floor") {
+            fallSound.Stop();
         }
     }
 }

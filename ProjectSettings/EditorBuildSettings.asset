@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/Leaves.unity
+    guid: 0296f10595de54737a0adb2d8dfbe69f
+  - enabled: 1
+    path: Assets/Scenes/Sequins.unity
+    guid: 4b1e99583bd444da9bfaefa2d4bfab10
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: e63aeff93193e4d42bb04b6fbaac4019, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 0ded90185b7b04bf79251ded9e71030a, type: 2}
