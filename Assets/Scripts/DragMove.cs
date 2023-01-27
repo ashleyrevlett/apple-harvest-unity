@@ -8,9 +8,16 @@ public class DragMove : MonoBehaviour
 {
     public float rotationSpeed = 10f;
     bool isMoving = false;
-    Vector3 lastTouchPos;
+    Vector2 lastTouchPos;
     Vector3 moveDir;
     List<Rigidbody> caughtRigidbodies = new List<Rigidbody>();
+
+    AudioSource sound;
+
+    void Start()
+    {
+        sound = gameObject.GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -30,21 +37,37 @@ public class DragMove : MonoBehaviour
 
                 //Determine if the touch is a moving touch
                 case TouchPhase.Moved:
+
+
                     // Determine direction by comparing the current touch position with the initial one
                     gameObject.transform.position = objPos;
-                    Vector3 tempMoveDir = (objPos - lastTouchPos).normalized;
+                    Vector2 tempMoveDir = (new Vector2(objPos.x, objPos.y) - lastTouchPos).normalized;
                     if (tempMoveDir.x > 0) {
                         moveDir = Vector3.right;
                     } else if (tempMoveDir.x < 0) {
                         moveDir = Vector3.left;
                     }
                     // Debug.Log(moveDir);
+
+                    if (!sound.isPlaying) {
+                        sound.Play();
+                    } else {
+                        if (lastTouchPos == touchPos) {
+                            sound.Stop();
+                        }
+                    }
+
                     lastTouchPos = touchPos;
+
                     break;
 
                 case TouchPhase.Ended:
                     // Report that the touch has ended when it ends
                     isMoving = false;
+
+                    if (sound.isPlaying) {
+                        sound.Stop();
+                    }
                     // lastTouchPos = Vector3.zero;
                     // moveDir = Vector3.zero;
                     break;
