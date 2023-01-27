@@ -11,40 +11,51 @@ public class GridManager : MonoBehaviour
 
     public float gap = .1f;
 
+    public float inset = 0f;
+
     int columns, rows;
     List<GameObject> items = new List<GameObject>();
 
     void Start()
     {
-        float screenAspect = (float) Screen.width / (float) Screen.height;
-        float camHalfHeight = Camera.main.orthographicSize;
-        float camHalfWidth = screenAspect * camHalfHeight;
+        MeshRenderer s = itemPrefab.GetComponent<MeshRenderer>();
+        float w = s.bounds.size.x + gap;
+        float h = s.bounds.size.y + gap;
+        // inset = w * 2f;
+
+        // Vector3 insetVector = Camera.main.WorldToScreenPoint(new Vector3(inset, 0f, 0f));
+        // float insetInScreen = Mathf.Abs((Screen.width / 2f) - insetVector.x);
+        float insetInScreen = 0f;
+        // Debug.Log($"{Screen.width} x {Screen.height}, {inset}: {insetInScreen}");
+
+        float screenAspect = (float) (Screen.width - insetInScreen) / (float) (Screen.height - insetInScreen);
+        float camHalfHeight = Camera.main.orthographicSize - inset;
+        float camHalfWidth = screenAspect * (camHalfHeight - inset);
         float camWidth = 2.0f * camHalfWidth;
         float camHeight = 2.0f * camHalfHeight;
 
-        MeshRenderer s = itemPrefab.GetComponent<MeshRenderer>();
-
-        float w = s.bounds.size.x + gap;
-        float h = s.bounds.size.y + gap;
-        columns = (int)Mathf.Ceil(camWidth / w);
-        rows = (int)Mathf.Ceil((Camera.main.orthographicSize * 2) / h);
+        columns = (int)Mathf.Floor(camWidth / w);
+        rows = (int)Mathf.Floor(camHeight / h);
         Quaternion rot = Quaternion.Euler(new Vector3(0, 12f, 0));
 
         float yTile = (1f / rows) / screenAspect;
         float xTile = yTile / screenAspect;
-        Vector2 tiling = new Vector2(xTile, yTile); // flip x val
+        Vector2 tiling = new Vector2(xTile, yTile);
 
-        Debug.Log($"{camWidth}x{camHeight}, {screenAspect}%, {columns}x{rows}, {tiling.x}, {tiling.y}");
+        Debug.Log($"{camWidth}x{camHeight}, {screenAspect}%, {columns}x{rows}, tiling: ({tiling.x}, {tiling.y}, size: {w} x {h})");
 
         for (int i = 0; i < columns; i++)
         {
             for (int j = 0; j < rows; j++)
             {
-                float x = i * (w) - camHalfWidth + (w / 2);
-                float y = j * (h) - camHalfHeight + (h / 2);
+                float x = (i * w) - camHalfWidth + inset - (w);
+                float y = (j * h) - camHalfHeight + inset - (h * 1.5f);
+                // float x+ (i * (w) - camHalfWidth + (w / 2));
+                // float y = inset + (j * (h) - camHalfHeight + (h / 2));
                 Vector3 pos = new Vector3(x, y, zPos);
 
                 GameObject l = Instantiate(itemPrefab, pos, rot);
+                l.name = $"Sequin ({i}, {j})";
                 // Debug.Log(pos);
                 foreach(var material in l.GetComponent<Renderer>().materials) {
                     // Debug.Log(pos);
