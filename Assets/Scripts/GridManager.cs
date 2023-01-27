@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour
 
         float yTile = (1f / rows) / screenAspect;
         float xTile = yTile / screenAspect;
-        Vector2 tiling = new Vector2(xTile * -1f, yTile); // flip x val
+        Vector2 tiling = new Vector2(xTile, yTile); // flip x val
 
         Debug.Log($"{camWidth}x{camHeight}, {screenAspect}%, {columns}x{rows}, {tiling.x}, {tiling.y}");
 
@@ -50,7 +50,7 @@ public class GridManager : MonoBehaviour
                     // Debug.Log(pos);
                     if (material.name == "Material.Back (Instance)") {
                         // float xOffset = (((x + camHalfWidth)) / camWidth) - (tiling.x);
-                        float xOffset = xTile + ((x - (w / 2f) + camHalfWidth) / camWidth);
+                        float xOffset = ((x - (w / 2f) + camHalfWidth) / camWidth);
                         float yOffset = ((y - (h * screenAspect) + camHalfHeight) / camHeight);
                         // float xOffset = ((x + camHalfWidth) * .5f / camWidth) + textureOffset;
                         // float yOffset = ((y + camHalfHeight) * .5f / camHeight) + textureOffset;
