@@ -7,6 +7,8 @@ TagManager:
   - Apple
   - Floor
   - SequinEdge
+  - Item
+  - TouchMagnet
   layers:
   - Default
   - TransparentFX

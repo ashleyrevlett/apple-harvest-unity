@@ -8,12 +8,21 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scenes/MenuScene.unity
+    guid: 993a1815e9cb24bf99c6004c550f0db8
+  - enabled: 1
     path: Assets/Scenes/Leaves.unity
     guid: 0296f10595de54737a0adb2d8dfbe69f
   - enabled: 1
     path: Assets/Scenes/Sequins.unity
     guid: 4b1e99583bd444da9bfaefa2d4bfab10
+  - enabled: 1
+    path: Assets/Scenes/CubeLook.unity
+    guid: 1f79cad39733c4d48a6bcac06d5ee16a
+  - enabled: 1
+    path: Assets/Scenes/CubeFlip.unity
+    guid: 4d8d5807cde794e568aa14f6970369a8
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: e63aeff93193e4d42bb04b6fbaac4019, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 0ded90185b7b04bf79251ded9e71030a, type: 2}
