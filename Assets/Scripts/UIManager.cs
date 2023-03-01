@@ -8,4 +8,9 @@ public class UIManager : MonoBehaviour
     public void LoadMenu() {
         SceneManager.LoadScene("MenuScene");
     }
+
+    public void ReloadCurrentScene() {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
 }
